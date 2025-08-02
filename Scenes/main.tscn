@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgy67vs6jxxte"]
+
+[sub_resource type="TileSet" id="TileSet_7u77a"]
+tile_shape = 3
+
+[node name="Main" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_7u77a")
