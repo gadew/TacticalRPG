@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://twn5dfmtjwap"]
+
+[ext_resource type="Shader" uid="uid://p42fvs4ty0pf" path="res://Shaders/hue_shift.gdshader" id="2_lpvrq"]
+[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Lancer_Idle.png" id="3_3rt3l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
+shader = ExtResource("2_lpvrq")
+shader_parameter/shift = 0.0
+
+[sub_resource type="Animation" id="Animation_6t5aa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cvnsp"]
+resource_name = "idle"
+length = 12.0
+loop_mode = 1
+step = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.99, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 4, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vgqql"]
+_data = {
+&"RESET": SubResource("Animation_6t5aa"),
+&"idle": SubResource("Animation_cvnsp")
+}
+
+[node name="sprite" type="Sprite2D"]
+material = SubResource("ShaderMaterial_vgqql")
+texture = ExtResource("3_3rt3l")
+hframes = 12
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vgqql")
+}
+autoplay = "idle"
+speed_scale = 15.0
