@@ -3,8 +3,6 @@ extends Node2D
 @onready var terrain: TileMapLayer = %terrain
 @onready var astar: AStarGrid2D = AStarGrid2D.new()
 
-@onready var unit: Unit = %unit
-
 func _setup_astargrid2d(_astar_grid: AStarGrid2D, _terrain: TileMapLayer):
     #initialize based on tilemaplayer values
     _astar_grid.cell_size = _terrain.tile_set.tile_size
@@ -23,10 +21,23 @@ func _setup_astargrid2d(_astar_grid: AStarGrid2D, _terrain: TileMapLayer):
 func _ready() -> void:
     _setup_astargrid2d(astar, terrain)
 
+    _create_unit_at(Vector2i(0, 0))
+    _create_unit_at(Vector2i(0, 1))
+    _create_unit_at(Vector2i(1, 0))
+    _create_unit_at(Vector2i(1, 1))
+
+func _create_unit_at(grid_position: Vector2i):
+    var unit: Unit = Unit.create(0)
+    unit.global_position = terrain.map_to_local(grid_position)
+    add_child(unit)
+    terrain.get_cell_tile_data(grid_position).set_custom_data("unit", unit)
+    astar.set_point_solid(grid_position)
+    return unit
+
 func _click_tile_at(input_global_position: Vector2):
     var grid_location: Vector2i = terrain.local_to_map(terrain.to_local(input_global_position))
-    unit.move_to(astar, grid_location)
-    await unit.move_end
+    #unit.move_to(astar, grid_location)
+    #await unit.move_end
 
 func _unhandled_input(event: InputEvent) -> void:
     if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
