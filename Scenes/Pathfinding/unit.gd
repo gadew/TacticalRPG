@@ -10,13 +10,13 @@ static func create(color_shift: float = 0) -> Unit:
     unit.material.set_shader_parameter("shift", color_shift)
     return unit
 
-func select():
+func select() -> void:
     %selected.visible = true
 
-func deselect():
+func deselect() -> void:
     %selected.visible = false
 
-func move_along(points: Array[Vector2], duration: float = 0.25):
+func move_along(points: Array[Vector2], duration: float = 0.25) -> void:
     var tween: Tween = create_tween()
     for point in points:
         tween.tween_property(self, "position", point + Vector2.ONE * 32, duration)

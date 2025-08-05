@@ -10,7 +10,7 @@ enum State {NONE, SELECT, ACTION}
 var _state: State = State.SELECT
 var _selected: Vector2i
 
-static func _setup_astargrid2d(_astar_grid: AStarGrid2D, _terrain: TileMapLayer):
+static func _setup_astargrid2d(_astar_grid: AStarGrid2D, _terrain: TileMapLayer) -> void:
 	#initialize based on tilemaplayer values
 	_astar_grid.cell_size = _terrain.tile_set.tile_size
 	_astar_grid.region = _terrain.get_used_rect()
@@ -36,7 +36,7 @@ func _ready() -> void:
 	_create_unit_at(Vector2i(0, 1))
 	_create_unit_at(Vector2i(1, 1))
 
-func _create_unit_at(grid_position: Vector2i, color_shift: float = 0):
+func _create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
 	var unit: Unit = Unit.create(color_shift)
 	unit.global_position = _terrainlayer.map_to_local(grid_position)
 	add_child(unit)
@@ -44,7 +44,7 @@ func _create_unit_at(grid_position: Vector2i, color_shift: float = 0):
 	_astar.set_point_solid(grid_position)
 	return unit
 
-func _attempt_move_to(origin: Vector2i, target: Vector2i):
+func _attempt_move_to(origin: Vector2i, target: Vector2i) -> void:
 	if origin in _position2unit.keys() and not target in _position2unit.keys():
 		var unit: Unit = _position2unit[origin]
 		var distance: Vector2i = (origin - target).abs()
@@ -56,7 +56,7 @@ func _attempt_move_to(origin: Vector2i, target: Vector2i):
 			_astar.set_point_solid(target)
 			await unit.move_along(path)
 
-func _render_selection_layer_radius(at: Vector2i, radius: int):
+func _render_selection_layer_radius(at: Vector2i, radius: int) -> void:
 	_selectionlayer.clear()
 	for i in range(at.x-radius, at.x+radius+1):
 		var dx: int = abs(at.x - i)
@@ -70,7 +70,7 @@ func _render_selection_layer_radius(at: Vector2i, radius: int):
 				if unoccupied and path_available:
 					_selectionlayer.set_cell(position, 0, Vector2i.ZERO)
 
-func _click_tile_at(input_global_position: Vector2):
+func _click_tile_at(input_global_position: Vector2) -> void:
 	var grid_location: Vector2i = _terrainlayer.local_to_map(_terrainlayer.to_local(input_global_position))
 	match _state:
 		State.NONE:
