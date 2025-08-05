@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://twn5dfmtjwap"]
+[gd_scene load_steps=8 format=3 uid="uid://twn5dfmtjwap"]
 
 [ext_resource type="Shader" uid="uid://p42fvs4ty0pf" path="res://Shaders/hue_shift.gdshader" id="2_lpvrq"]
 [ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Lancer_Idle.png" id="3_3rt3l"]
+[ext_resource type="Script" uid="uid://dgpihqv6mhb5b" path="res://Scenes/Pathfinding/unit.gd" id="3_68coa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
 shader = ExtResource("2_lpvrq")
@@ -50,6 +51,7 @@ _data = {
 material = SubResource("ShaderMaterial_vgqql")
 texture = ExtResource("3_3rt3l")
 hframes = 12
+script = ExtResource("3_68coa")
 
 [node name="animation" type="AnimationPlayer" parent="."]
 libraries = {
