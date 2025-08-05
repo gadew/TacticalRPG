@@ -8,6 +8,9 @@ func _ready() -> void:
     #initialize based on tilemaplayer values
     astar.cell_size = terrain.tile_set.tile_size
     astar.region = terrain.get_used_rect()
+    #set expected heuristic and forbid diagonal movement
+    astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+    astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
     astar.update()
     
     #set solid blocks as untraversable in AStarGrid2D graph
