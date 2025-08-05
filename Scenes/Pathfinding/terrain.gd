@@ -6,8 +6,11 @@ var _selection: TileMapLayer
 var _astar: AStarGrid2D
 var _unit_map: Dictionary[Vector2i, Unit]
 
-static func taxicab(v: Vector2i, w: Vector2i) -> int:
-	return abs(v.x - w.x) + abs(v.y + w.y)
+func map_to_local(v: Vector2i) -> Vector2:
+	return _terrain.map_to_local(v)
+
+func local_to_map(v: Vector2) -> Vector2i:
+	return _terrain.local_to_map(_terrain.to_local(v))
 
 func _traversable(v: Vector2i) -> bool:
 	var tile_data: TileData = _terrain.get_cell_tile_data(v)
@@ -33,8 +36,35 @@ func _init(terrain: TileMapLayer, selection: TileMapLayer) -> void:
 	_setup_astargrid2d()
 	_unit_map = {}
 
-func map_to_local(v: Vector2i) -> Vector2:
-	return _terrain.map_to_local(v)
+func create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
+	var unit: Unit = Unit.create(color_shift)
+	_unit_map[grid_position] = unit
+	_astar.set_point_solid(grid_position)
+	return unit
+
+func select_unit_at(v: Vector2i) -> Unit:
+	var unit: Unit = _unit_map.get(v)
+	if unit != null:
+		print("select")
+		unit.select()
+		_render_selection_layer_radius(v, unit.MOVERANGE)
+	return unit
+
+func deselect_unit_at(v: Vector2i) -> Unit:
+	var unit: Unit = _unit_map.get(v)
+	if unit != null:
+		unit.deselect()
+		_selection.clear()
+	return unit
+
+func move_from_to(origin: Vector2i, target: Vector2i) -> void:
+	var unit: Unit = _unit_map.get(origin)
+	if unit != null and not _unit_map.has(target):
+		var path: PackedVector2Array = _astar.get_point_path(origin, target)
+		if TaxiCab.distance(origin, target) <= unit.MOVERANGE and not path.is_empty():
+			_remove_unit_from(origin)
+			_place_unit_at(unit, target)
+			await unit.move_along(path)
 
 func _place_unit_at(unit: Unit, v: Vector2i) -> Unit:
 	_unit_map[v] = unit
@@ -42,28 +72,12 @@ func _place_unit_at(unit: Unit, v: Vector2i) -> Unit:
 	return unit
 
 func _remove_unit_from(v: Vector2i) -> Unit:
-	if v in _unit_map.keys(): 
-		var unit: Unit = _unit_map[v]
+	var unit: Unit = _unit_map.get(v)
+	if unit != null: 
 		_unit_map.erase(v)
 		_astar.set_point_solid(v, false)
-		return unit
-	else:
-		return null
-
-func create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
-	var unit: Unit = Unit.create(color_shift)
-	_unit_map[grid_position] = unit
-	_astar.set_point_solid(grid_position)
+		print("remove")
 	return unit
-
-func attempt_move_to(origin: Vector2i, target: Vector2i) -> void:
-	var unit: Unit = _remove_unit_from(origin)
-	if unit != null and not target in _unit_map.keys():
-		var path: PackedVector2Array = _astar.get_point_path(origin, target)
-		if taxicab(origin, target) <= unit.MOVERANGE and not path.is_empty():
-			_remove_unit_from(origin)
-			_place_unit_at(unit, target)
-			await unit.move_along(path)
 
 func _render_selection_layer_radius(at: Vector2i, radius: int) -> void:
 	_selection.clear()
