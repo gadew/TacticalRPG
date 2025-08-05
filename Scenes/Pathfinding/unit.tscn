@@ -47,7 +47,7 @@ _data = {
 &"idle": SubResource("Animation_cvnsp")
 }
 
-[node name="sprite" type="Sprite2D"]
+[node name="unit" type="Sprite2D"]
 material = SubResource("ShaderMaterial_vgqql")
 texture = ExtResource("3_3rt3l")
 hframes = 12
