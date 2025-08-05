@@ -2,7 +2,7 @@ class_name TaxiCab
 extends RefCounted
 
 static func distance(v: Vector2i, w: Vector2i) -> int:
-    return abs(v.x - w.x) + abs(v.y + w.y)
+    return abs(v.x - w.x) + abs(v.y - w.y)
 
 static func range(position: Vector2i, radius: int) -> TaxicabIterator:
     return TaxicabIterator.new(position, radius)
@@ -27,12 +27,12 @@ class TaxicabIterator:
         return should_continue()
 
     func _iter_next(_arg) -> bool:
-        if abs(_position.x - x) + abs(_position.y - y) < _radius:
+        if abs(x+1) + abs(y) <= _radius:
             x += 1
         else:
             y += 1
-            x = -_radius + abs(_position.y - y)
+            x = -_radius + abs(y)
         return should_continue()
 
     func _iter_get(_arg):
-        return Vector2i(x, y)
+        return _position + Vector2i(x, y)
