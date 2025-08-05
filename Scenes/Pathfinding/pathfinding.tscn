@@ -30,7 +30,7 @@ tile_set = SubResource("TileSet_5ukr8")
 
 [node name="unit" parent="." instance=ExtResource("3_xwhdc")]
 unique_name_in_owner = true
-position = Vector2(32, 88)
+position = Vector2(34, 28)
 script = ExtResource("5_xwhdc")
 
 [node name="highlight" parent="." instance=ExtResource("4_wana6")]
