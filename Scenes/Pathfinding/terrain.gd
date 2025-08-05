@@ -45,7 +45,6 @@ func create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
 func select_unit_at(v: Vector2i) -> Unit:
 	var unit: Unit = _unit_map.get(v)
 	if unit != null:
-		print("select")
 		unit.select()
 		_render_selection_layer_radius(v, unit.MOVERANGE)
 	return unit
@@ -76,7 +75,6 @@ func _remove_unit_from(v: Vector2i) -> Unit:
 	if unit != null: 
 		_unit_map.erase(v)
 		_astar.set_point_solid(v, false)
-		print("remove")
 	return unit
 
 func _render_selection_layer_radius(at: Vector2i, radius: int) -> void:
