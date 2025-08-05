@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform float shift : hint_range(0.0, 1.0, 0.1) = 0.;
+uniform float shift : hint_range(0.0, 1.0, 0.05) = 0.;
 
 vec3 hueShift(vec3 color, float hue) {
     const vec3 k = vec3(0.57735, 0.57735, 0.57735);
@@ -9,5 +9,5 @@ vec3 hueShift(vec3 color, float hue) {
 }
 
 void fragment() {
-	COLOR.rgb = hueShift(COLOR.rgb, shift);
+	COLOR.rgb = hueShift(COLOR.rgb, shift * 2. * PI);
 }
