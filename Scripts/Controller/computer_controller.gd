@@ -8,7 +8,10 @@ func _init(commander: Commander) -> void:
 
 func start_turn() -> void:
 	var unit: Unit = _commander._units.pick_random()
-	pass
+	var reachable: Array[Vector2i] = _commander._terrain.get_reachable_tiles(unit)
+	if not reachable.is_empty():
+		await _commander._terrain.move_unit_to(unit, reachable.pick_random())
+	_commander.end_turn.emit(_commander)
 
 func input_grid_position(_grid_position: Vector2i) -> void:
 	pass

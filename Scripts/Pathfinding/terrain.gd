@@ -47,7 +47,7 @@ func get_unit_at(v: Vector2i) -> Unit:
 func get_unit_location(unit: Unit) -> Vector2i:
 	return _unit_map.find_key(unit)
 
-func get_tiles_in_range(unit: Unit) -> Array[Vector2i]:
+func get_reachable_tiles(unit: Unit) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	var from: Vector2i = get_unit_location(unit)
 	var radius: int = unit.MOVERANGE
@@ -102,6 +102,6 @@ func _remove_unit_from(v: Vector2i) -> Unit:
 
 func _render_selection_layer_radius(unit: Unit) -> void:
 	_selection.clear()
-	var tiles_in_range: Array[Vector2i] = get_tiles_in_range(unit)
-	for tile: Vector2i in tiles_in_range:
+	var reachable: Array[Vector2i] = get_reachable_tiles(unit)
+	for tile: Vector2i in reachable:
 		_selection.set_cell(tile, 0, Vector2i.ZERO)

@@ -16,7 +16,7 @@ var _current_commander: Commander
 func _ready() -> void:
 	_terrain = Terrain.new(_terrainlayer, _selectionlayer)
 	red_commander = Commander.new(Commander.ControllerType.HUMAN, _terrain, "PLAYER", 0)
-	blue_commander = Commander.new(Commander.ControllerType.HUMAN, _terrain, "PLAYER", 0.5)
+	blue_commander = Commander.new(Commander.ControllerType.COMPUTER, _terrain, "CPU", 0.5)
 	_turn_buffer = CircularBuffer.new([red_commander, blue_commander])
 
 	start_turn.connect(func(commander: Commander): _current_commander = commander; _current_commander.start_turn())
