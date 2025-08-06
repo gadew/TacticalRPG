@@ -56,9 +56,19 @@ func deselect_unit_at(v: Vector2i) -> Unit:
 		_selection.clear()
 	return unit
 
+func move_unit_to(unit: Unit, target: Vector2i) -> void:
+	var origin: Vector2i = _unit_map.find_key(unit)
+	if origin != null:
+		await _move_unit_from_to(unit, origin, target)
+
 func move_from_to(origin: Vector2i, target: Vector2i) -> void:
 	var unit: Unit = _unit_map.get(origin)
 	if unit != null and not _unit_map.has(target):
+		await _move_unit_from_to(unit, origin, target)
+
+func _move_unit_from_to(unit: Unit, origin: Vector2i, target: Vector2i) -> void:
+	assert(_unit_map[origin] == unit)
+	if not _unit_map.has(target):
 		var path: PackedVector2Array = _astar.get_point_path(origin, target)
 		if TaxiCab.distance(origin, target) <= unit.MOVERANGE and not path.is_empty():
 			_remove_unit_from(origin)
