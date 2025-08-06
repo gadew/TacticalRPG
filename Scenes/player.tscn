@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://54ffosbpy833"]
 
 [ext_resource type="Script" uid="uid://bgfvdomc8fbaw" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Lancer_Idle.png" id="2_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Textures/Lancer_Idle.png" id="2_cvnsp"]
 
 [sub_resource type="Animation" id="Animation_6t5aa"]
 length = 0.001

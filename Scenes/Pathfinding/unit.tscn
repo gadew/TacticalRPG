@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://twn5dfmtjwap"]
 
 [ext_resource type="Shader" uid="uid://p42fvs4ty0pf" path="res://Shaders/hue_shift.gdshader" id="2_lpvrq"]
-[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Lancer_Idle.png" id="3_3rt3l"]
-[ext_resource type="Script" uid="uid://dgpihqv6mhb5b" path="res://Scenes/Pathfinding/unit.gd" id="3_68coa"]
-[ext_resource type="Texture2D" uid="uid://cohdqeorsa0i8" path="res://Assets/selected.png" id="4_pj7v6"]
+[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Textures/Lancer_Idle.png" id="3_3rt3l"]
+[ext_resource type="Script" uid="uid://dgpihqv6mhb5b" path="res://Scripts/Unit/unit.gd" id="3_68coa"]
+[ext_resource type="Texture2D" uid="uid://cohdqeorsa0i8" path="res://Assets/Textures/selected.png" id="4_pj7v6"]
 [ext_resource type="Shader" uid="uid://carhnd6n5utxp" path="res://Shaders/blink.gdshader" id="4_r3vwh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
