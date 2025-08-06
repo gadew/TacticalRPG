@@ -11,6 +11,7 @@ static func create(commander: Commander) -> Unit:
 	var unit: Unit = load("uid://twn5dfmtjwap").instantiate()
 	unit.material.set_shader_parameter("shift", commander.color_shift)
 	unit._commander = commander
+	commander.register_unit(unit)
 	return unit
 
 func is_commanded_by(commander: Commander) -> bool:
