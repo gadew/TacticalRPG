@@ -2,14 +2,8 @@
 
 ## About
 
-- A project to try and learn step by step how to make something similar to any of the top down tile-turn-based RPGs. FFTactics, Shining Force, Golden Sun, XCOM, etc.
-- Meant as a learning project 
-- Latest Godot version.
-- 2D
-- Hex tiles
+A project to learn how to make a top down tile-turn-based RPGs, e.g. FFTactics, Shining Force, Golden Sun, XCOM, etc.
 
-## Members
-- Tusk
-- Lordhaw
-- firewill
-- rezbee
+- Learning project.
+- Using Godot version 4.4.1.
+- Strictly 2D.
