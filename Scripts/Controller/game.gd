@@ -7,8 +7,8 @@ signal start_turn(Commander)
 @onready var _selectionlayer: TileMapLayer = %selection
 var _terrain: Terrain
 
-var red_commander: Commander = Commander.new(Commander.ControllerType.HUMAN, 0)
-var blue_commander: Commander = Commander.new(Commander.ControllerType.COMPUTER, 0.5)
+var red_commander: Commander = Commander.new(Commander.ControllerType.HUMAN, "PLAYER", 0)
+var blue_commander: Commander = Commander.new(Commander.ControllerType.COMPUTER, "CPU", 0.5)
 
 var _turn_buffer: CircularBuffer
 var _current_commander: Commander
@@ -24,6 +24,7 @@ func _ready() -> void:
 	_create_unit_for_at(red_commander, Vector2i(0, 0))
 	_create_unit_for_at(blue_commander, Vector2i(17, 0))
 
+	await get_tree().process_frame
 	start_turn.emit(_turn_buffer.pop())
 
 func _create_unit_for_at(commander: Commander, grid_position: Vector2i) -> Unit:
