@@ -17,7 +17,7 @@ func _init(controller: ControllerType, _name: String, color: float) -> void:
 		ControllerType.HUMAN:
 			_controller = PlayerController.new(self)
 		ControllerType.COMPUTER:
-			_controller = ComputerController.new()
+			_controller = ComputerController.new(self)
 	
 	color_shift = color
 	name = _name
