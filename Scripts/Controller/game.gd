@@ -35,8 +35,6 @@ func _create_unit_for_at(commander: Commander, grid_position: Vector2i) -> Unit:
 
 func _click_tile_at(input_global_position: Vector2) -> void:
 	var grid_position: Vector2i = _terrain.local_to_map(input_global_position)
-	print(_current_commander.color_shift)
-	print(grid_position)
 	_current_commander.input_grid_position(grid_position, _terrain)
 
 func _unhandled_input(event: InputEvent) -> void:
