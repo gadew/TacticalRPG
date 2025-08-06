@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct2nsffsrjptx"
-path="res://.godot/imported/grid_muted.png-e11202956b72ae47e1176b0a575f8b2d.ctex"
+uid="uid://vup4t8xbp0mf"
+path="res://.godot/imported/tile_0048g_64x64.png-37b49260cdf48d09802922476af3d11d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/grid_muted.png"
-dest_files=["res://.godot/imported/grid_muted.png-e11202956b72ae47e1176b0a575f8b2d.ctex"]
+source_file="res://Assets/Textures/tile_0048g_64x64.png"
+dest_files=["res://.godot/imported/tile_0048g_64x64.png-37b49260cdf48d09802922476af3d11d.ctex"]
 
 [params]
 

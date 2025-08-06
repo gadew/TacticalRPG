@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=4 uid="uid://b8s1vfedqenyj"]
 
-[ext_resource type="Script" uid="uid://cofb5h2dx8c0j" path="res://Scenes/Pathfinding/pathfinding.gd" id="1_a53hr"]
-[ext_resource type="TileSet" uid="uid://byyvfag4wfql5" path="res://Scenes/Pathfinding/tileset_terrain.tres" id="1_lu3dr"]
-[ext_resource type="TileSet" uid="uid://brllnrenihh6e" path="res://Scenes/Pathfinding/tileset_selection.tres" id="3_2lktl"]
-[ext_resource type="TileSet" uid="uid://bmnwimn85tw64" path="res://Scenes/Pathfinding/tileset_grid.tres" id="4_lu3dr"]
+[ext_resource type="Script" uid="uid://cofb5h2dx8c0j" path="res://Scripts/Pathfinding/pathfinding.gd" id="1_a53hr"]
+[ext_resource type="TileSet" uid="uid://byyvfag4wfql5" path="res://Assets/Tilesets/tileset_terrain.tres" id="1_lu3dr"]
+[ext_resource type="TileSet" uid="uid://brllnrenihh6e" path="res://Assets/Tilesets/tileset_selection.tres" id="3_2lktl"]
+[ext_resource type="TileSet" uid="uid://bmnwimn85tw64" path="res://Assets/Tilesets/tileset_grid.tres" id="4_lu3dr"]
 
 [node name="pathfinding" type="Node2D"]
 script = ExtResource("1_a53hr")
