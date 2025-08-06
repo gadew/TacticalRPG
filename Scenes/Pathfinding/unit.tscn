@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://twn5dfmtjwap"]
+
+[ext_resource type="Shader" uid="uid://p42fvs4ty0pf" path="res://Shaders/hue_shift.gdshader" id="2_lpvrq"]
+[ext_resource type="Texture2D" uid="uid://uhd2c5ju03hn" path="res://Assets/Lancer_Idle.png" id="3_3rt3l"]
+[ext_resource type="Script" uid="uid://dgpihqv6mhb5b" path="res://Scenes/Pathfinding/unit.gd" id="3_68coa"]
+[ext_resource type="Texture2D" uid="uid://cohdqeorsa0i8" path="res://Assets/selected.png" id="4_pj7v6"]
+[ext_resource type="Shader" uid="uid://carhnd6n5utxp" path="res://Shaders/blink.gdshader" id="4_r3vwh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
+resource_local_to_scene = true
+shader = ExtResource("2_lpvrq")
+shader_parameter/shift = 0.0
+
+[sub_resource type="Animation" id="Animation_6t5aa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cvnsp"]
+resource_name = "idle"
+length = 12.0
+loop_mode = 1
+step = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.99, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 4, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vgqql"]
+_data = {
+&"RESET": SubResource("Animation_6t5aa"),
+&"idle": SubResource("Animation_cvnsp")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j311l"]
+shader = ExtResource("4_r3vwh")
+shader_parameter/frequency = 5.0
+
+[node name="unit" type="Sprite2D"]
+material = SubResource("ShaderMaterial_vgqql")
+texture = ExtResource("3_3rt3l")
+hframes = 12
+script = ExtResource("3_68coa")
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vgqql")
+}
+autoplay = "idle"
+speed_scale = 15.0
+
+[node name="selected" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+show_behind_parent = true
+material = SubResource("ShaderMaterial_j311l")
+position = Vector2(0, 30)
+texture = ExtResource("4_pj7v6")
