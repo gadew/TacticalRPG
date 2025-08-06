@@ -41,23 +41,23 @@ func place_unit_at(unit: Unit, grid_position: Vector2i) -> void:
 	_astar.set_point_solid(grid_position)
 	unit.global_position = _terrain.to_global(_terrain.map_to_local(grid_position))
 
-func select_unit_at(v: Vector2i) -> Unit:
-	var unit: Unit = _unit_map.get(v)
-	if unit != null:
-		unit.select()
-		_render_selection_layer_radius(v, unit.MOVERANGE)
-	return unit
+func get_unit_at(v: Vector2i) -> Unit:
+	return _unit_map.get(v)
 
-func deselect_unit_at(v: Vector2i) -> Unit:
-	var unit: Unit = _unit_map.get(v)
-	if unit != null:
-		unit.deselect()
-		_selection.clear()
-	return unit
+func select_unit(unit: Unit) -> void:
+	var grid_position: Vector2i = _unit_map.find_key(unit)
+	if grid_position != null:
+		unit.select()
+		_render_selection_layer_radius(grid_position, unit.MOVERANGE)
+
+func deselect_unit(unit: Unit) -> void:
+	unit.deselect()
+	_selection.clear()
 
 func move_unit_to(unit: Unit, target: Vector2i) -> void:
 	var origin: Vector2i = _unit_map.find_key(unit)
 	if origin != null:
+		_selection.clear()
 		await _move_unit_from_to(unit, origin, target)
 
 func move_from_to(origin: Vector2i, target: Vector2i) -> void:
