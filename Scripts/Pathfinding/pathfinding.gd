@@ -4,6 +4,9 @@ extends Node
 @onready var _selectionlayer: TileMapLayer = %selection
 var _terrain: Terrain
 
+var red_commander: Commander = Commander.new(0)
+var blue_commander: Commander = Commander.new(0.5)
+
 enum State {NONE, SELECT, ACTION}
 var _state: State = State.SELECT
 var _selected: Vector2i
@@ -11,14 +14,14 @@ var _selected: Vector2i
 func _ready() -> void:
 	_terrain = Terrain.new(_terrainlayer, _selectionlayer)
 
-	_create_unit_at(Vector2i(0, 0))
-	_create_unit_at(Vector2i(0, 1))
-	_create_unit_at(Vector2i(1, 1))
+	_create_unit_for_at(blue_commander, Vector2i(0, 0))
+	_create_unit_for_at(blue_commander, Vector2i(0, 1))
+	_create_unit_for_at(red_commander, Vector2i(1, 1))
 
-func _create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
-	var unit: Unit = _terrain.create_unit_at(grid_position, color_shift)
+func _create_unit_for_at(commander: Commander, grid_position: Vector2i) -> Unit:
+	var unit: Unit = Unit.create(commander)
 	add_child(unit)
-	unit.global_position = _terrain.map_to_local(grid_position)
+	_terrain.place_unit_at(unit, grid_position)
 	return unit
 
 func _click_tile_at(input_global_position: Vector2) -> void:

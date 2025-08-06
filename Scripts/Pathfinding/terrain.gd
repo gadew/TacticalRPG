@@ -36,11 +36,10 @@ func _init(terrain: TileMapLayer, selection: TileMapLayer) -> void:
 	_setup_astargrid2d()
 	_unit_map = {}
 
-func create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
-	var unit: Unit = Unit.create(color_shift)
+func place_unit_at(unit: Unit, grid_position: Vector2i) -> void:
 	_unit_map[grid_position] = unit
 	_astar.set_point_solid(grid_position)
-	return unit
+	unit.global_position = _terrain.to_global(_terrain.map_to_local(grid_position))
 
 func select_unit_at(v: Vector2i) -> Unit:
 	var unit: Unit = _unit_map.get(v)

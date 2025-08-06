@@ -7,9 +7,9 @@ signal move_end(Unit)
 
 var _commander: Commander
 
-static func create(commander: Commander, color_shift: float = 0) -> Unit:
+static func create(commander: Commander) -> Unit:
 	var unit: Unit = load("uid://twn5dfmtjwap").instantiate()
-	unit.material.set_shader_parameter("shift", color_shift)
+	unit.material.set_shader_parameter("shift", commander.color_shift)
 	unit._commander = commander
 	return unit
 
