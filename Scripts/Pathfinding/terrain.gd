@@ -36,29 +36,52 @@ func _init(terrain: TileMapLayer, selection: TileMapLayer) -> void:
 	_setup_astargrid2d()
 	_unit_map = {}
 
-func create_unit_at(grid_position: Vector2i, color_shift: float = 0) -> Unit:
-	var unit: Unit = Unit.create(color_shift)
+func place_unit_at(unit: Unit, grid_position: Vector2i) -> void:
 	_unit_map[grid_position] = unit
 	_astar.set_point_solid(grid_position)
-	return unit
+	unit.global_position = _terrain.to_global(_terrain.map_to_local(grid_position))
 
-func select_unit_at(v: Vector2i) -> Unit:
-	var unit: Unit = _unit_map.get(v)
-	if unit != null:
-		unit.select()
-		_render_selection_layer_radius(v, unit.MOVERANGE)
-	return unit
+func get_unit_at(v: Vector2i) -> Unit:
+	return _unit_map.get(v)
 
-func deselect_unit_at(v: Vector2i) -> Unit:
-	var unit: Unit = _unit_map.get(v)
-	if unit != null:
-		unit.deselect()
+func get_unit_location(unit: Unit) -> Vector2i:
+	return _unit_map.find_key(unit)
+
+func get_reachable_tiles(unit: Unit) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	var from: Vector2i = get_unit_location(unit)
+	var radius: int = unit.MOVERANGE
+	for target in TaxiCab.range(from, radius):
+		if target in _terrain.get_used_cells():
+			var path: PackedVector2Array = _astar.get_point_path(from, target)
+			var unoccupied: bool = not target in _unit_map.keys() and _traversable(target)
+			var path_available: bool = len(path) > 0 and len(path) <= radius + 1
+			if unoccupied and path_available:
+				result.append(target)
+	return result
+
+func select_unit(unit: Unit) -> void:
+	unit.select()
+	_render_selection_layer_radius(unit)
+
+func deselect_unit(unit: Unit) -> void:
+	unit.deselect()
+	_selection.clear()
+
+func move_unit_to(unit: Unit, target: Vector2i) -> void:
+	var origin: Vector2i = get_unit_location(unit)
+	if origin != null:
 		_selection.clear()
-	return unit
+		await _move_unit_from_to(unit, origin, target)
 
 func move_from_to(origin: Vector2i, target: Vector2i) -> void:
 	var unit: Unit = _unit_map.get(origin)
 	if unit != null and not _unit_map.has(target):
+		await _move_unit_from_to(unit, origin, target)
+
+func _move_unit_from_to(unit: Unit, origin: Vector2i, target: Vector2i) -> void:
+	assert(_unit_map[origin] == unit)
+	if not _unit_map.has(target):
 		var path: PackedVector2Array = _astar.get_point_path(origin, target)
 		if TaxiCab.distance(origin, target) <= unit.MOVERANGE and not path.is_empty():
 			_remove_unit_from(origin)
@@ -77,12 +100,8 @@ func _remove_unit_from(v: Vector2i) -> Unit:
 		_astar.set_point_solid(v, false)
 	return unit
 
-func _render_selection_layer_radius(at: Vector2i, radius: int) -> void:
+func _render_selection_layer_radius(unit: Unit) -> void:
 	_selection.clear()
-	for position in TaxiCab.range(at, radius):
-		if position in _terrain.get_used_cells():
-			var path: PackedVector2Array = _astar.get_point_path(at, position)
-			var unoccupied: bool = not position in _unit_map.keys() and _traversable(position)
-			var path_available: bool = len(path) > 0 and len(path) <= radius + 1
-			if unoccupied and path_available:
-				_selection.set_cell(position, 0, Vector2i.ZERO)
+	var reachable: Array[Vector2i] = get_reachable_tiles(unit)
+	for tile: Vector2i in reachable:
+		_selection.set_cell(tile, 0, Vector2i.ZERO)

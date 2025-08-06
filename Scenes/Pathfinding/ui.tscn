@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://dprje27qwd55e"]
+
+[ext_resource type="Script" uid="uid://cg5itakqf1t03" path="res://Scripts/Ui/ui.gd" id="1_eheuh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ir8by"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0.501407, 0.501406, 0.501406, 0)
+shadow_offset = Vector2(16, 16)
+
+[node name="ui" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+script = ExtResource("1_eheuh")
+
+[node name="player" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Player"
+label_settings = SubResource("LabelSettings_ir8by")
+horizontal_alignment = 2
