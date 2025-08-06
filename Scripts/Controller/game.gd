@@ -7,14 +7,16 @@ signal start_turn(Commander)
 @onready var _selectionlayer: TileMapLayer = %selection
 var _terrain: Terrain
 
-var red_commander: Commander = Commander.new(Commander.ControllerType.HUMAN, "PLAYER", 0)
-var blue_commander: Commander = Commander.new(Commander.ControllerType.COMPUTER, "CPU", 0.5)
+var red_commander: Commander 
+var blue_commander: Commander
 
 var _turn_buffer: CircularBuffer
 var _current_commander: Commander
 
 func _ready() -> void:
 	_terrain = Terrain.new(_terrainlayer, _selectionlayer)
+	red_commander = Commander.new(Commander.ControllerType.HUMAN, _terrain, "PLAYER", 0)
+	blue_commander = Commander.new(Commander.ControllerType.HUMAN, _terrain, "PLAYER", 0.5)
 	_turn_buffer = CircularBuffer.new([red_commander, blue_commander])
 
 	start_turn.connect(func(commander: Commander): _current_commander = commander; _current_commander.start_turn())
@@ -35,7 +37,7 @@ func _create_unit_for_at(commander: Commander, grid_position: Vector2i) -> Unit:
 
 func _click_tile_at(input_global_position: Vector2) -> void:
 	var grid_position: Vector2i = _terrain.local_to_map(input_global_position)
-	_current_commander.input_grid_position(grid_position, _terrain)
+	_current_commander.input_grid_position(grid_position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
