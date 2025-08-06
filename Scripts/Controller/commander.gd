@@ -6,16 +6,16 @@ enum ControllerType {HUMAN, COMPUTER}
 signal end_turn(commander: Commander)
 
 var _controller: Controller
-var _units: Array[Unit]
-
 var color_shift: float
+var name: String = "No Name"
 
 enum State {NONE, SELECT, ACTION}
 var _state: State = State.NONE
 
+var _units: Array[Unit]
 var _selected: Unit = null
 
-func _init(controller: ControllerType, color: float) -> void:
+func _init(controller: ControllerType, _name: String, color: float) -> void:
 	match controller:
 		ControllerType.HUMAN:
 			_controller = PlayerController.new()
@@ -23,6 +23,7 @@ func _init(controller: ControllerType, color: float) -> void:
 			_controller = ComputerController.new()
 	
 	color_shift = color
+	name = _name
 
 func register_unit(unit: Unit) -> void:
 	assert(not _units.has(unit))
