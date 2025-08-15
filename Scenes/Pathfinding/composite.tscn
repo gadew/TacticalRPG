@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxofuy50ac45f"]
+
+[ext_resource type="PackedScene" uid="uid://b8s1vfedqenyj" path="res://Scenes/Pathfinding/game.tscn" id="1_q7dtl"]
+[ext_resource type="PackedScene" uid="uid://dprje27qwd55e" path="res://Scenes/Pathfinding/ui.tscn" id="2_4s4ts"]
+
+[node name="Composite" type="Node"]
+
+[node name="game_canvaslayer" type="CanvasLayer" parent="."]
+
+[node name="game" parent="game_canvaslayer" instance=ExtResource("1_q7dtl")]
+
+[node name="ui_canvas_layer" type="CanvasLayer" parent="."]
+
+[node name="ui" parent="ui_canvas_layer" instance=ExtResource("2_4s4ts")]
+
+[connection signal="start_turn" from="game_canvaslayer/game" to="ui_canvas_layer/ui" method="set_current_commander"]
