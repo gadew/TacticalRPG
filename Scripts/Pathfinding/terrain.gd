@@ -44,10 +44,10 @@ func get_reachable_tiles(unit: Unit) -> Array[Vector2i]:
 	return result
 
 ## Place [param unit] at [param grid_position].
-func place_unit_at(unit: Unit, grid_position: Vector2i) -> void:
-	_unit_map[grid_position] = unit
-	_astar.set_point_solid(grid_position)
-	unit.global_position = _terrain.to_global(_terrain.map_to_local(grid_position))
+func place_unit_at(unit: Unit, map_position: Vector2i) -> void:
+	_unit_map[map_position] = unit
+	_astar.set_point_solid(map_position)
+	unit.global_position = _terrain.to_global(_terrain.map_to_local(map_position))
 
 ## Mark [param unit] as selected.
 func select_unit(unit: Unit) -> void:
@@ -90,25 +90,25 @@ func _traversable(v: Vector2i) -> bool:
 	var tile_data: TileData = _terrain.get_cell_tile_data(v)
 	return tile_data != null and tile_data.get_custom_data("traversable")
 
-func _move_unit_from_to(unit: Unit, origin: Vector2i, target: Vector2i) -> void:
+func _move_unit_from_to(unit: Unit, origin: Vector2i, target_map_position: Vector2i) -> void:
 	assert(_unit_map[origin] == unit)
-	if not _unit_map.has(target):
-		var path: PackedVector2Array = _astar.get_point_path(origin, target)
-		if TaxiCab.distance(origin, target) <= unit.MOVERANGE and not path.is_empty():
+	if not _unit_map.has(target_map_position):
+		var path: PackedVector2Array = _astar.get_point_path(origin, target_map_position)
+		if TaxiCab.distance(origin, target_map_position) <= unit.MOVERANGE and not path.is_empty():
 			_remove_unit_from(origin)
-			_place_unit_at(unit, target)
+			_place_unit_at(unit, target_map_position)
 			await unit.move_along(path)
 
-func _place_unit_at(unit: Unit, v: Vector2i) -> Unit:
-	_unit_map[v] = unit
-	_astar.set_point_solid(v)
+func _place_unit_at(unit: Unit, map_position: Vector2i) -> Unit:
+	_unit_map[map_position] = unit
+	_astar.set_point_solid(map_position)
 	return unit
 
-func _remove_unit_from(v: Vector2i) -> Unit:
-	var unit: Unit = _unit_map.get(v)
+func _remove_unit_from(map_position: Vector2i) -> Unit:
+	var unit: Unit = _unit_map.get(map_position)
 	if unit != null: 
-		_unit_map.erase(v)
-		_astar.set_point_solid(v, false)
+		_unit_map.erase(map_position)
+		_astar.set_point_solid(map_position, false)
 	return unit
 
 func _render_selection_layer_radius(unit: Unit) -> void:

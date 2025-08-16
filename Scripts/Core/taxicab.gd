@@ -1,9 +1,12 @@
 class_name TaxiCab
 extends RefCounted
 
+## Calculates the taxicab distance (also called manhattan distance) between points [param v] and [param w].[br]
+## See also https://en.wikipedia.org/wiki/Taxicab_geometry.
 static func distance(v: Vector2i, w: Vector2i) -> int:
     return abs(v.x - w.x) + abs(v.y - w.y)
 
+## Provides an iterator that encompasses all tiles within [param radius] distance from [param position] 
 static func range(position: Vector2i, radius: int) -> TaxicabIterator:
     return TaxicabIterator.new(position, radius)
 
@@ -14,6 +17,7 @@ class TaxicabIterator:
     var x: int
     var y: int
 
+	## 
     func _init(position: Vector2i, radius: int) -> void:
         self._position = position
         self._radius = radius
