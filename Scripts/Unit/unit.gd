@@ -1,9 +1,5 @@
 class_name Unit
 extends Sprite2D
-## Base class for units.
-## 
-## A unit is an agent that will interact in battle with other units be it by fighting,
-## impeding movement or some other effect on the terrain.
 
 ## Signals that a moving animation has finished.
 signal move_end(Unit)
