@@ -4,7 +4,7 @@ extends Sprite2D
 ## Signals that a moving animation has finished.
 signal move_end(Unit)
 
-const MOVERANGE: int = 3
+const MOVE_RANGE: int = 3
 
 var _commander: Commander
 
