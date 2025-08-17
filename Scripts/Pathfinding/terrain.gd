@@ -33,7 +33,7 @@ func get_unit_location(unit: Unit) -> Vector2i:
 func get_reachable_tiles(unit: Unit) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	var from: Vector2i = get_unit_location(unit)
-	var radius: int = unit.MOVERANGE
+	var radius: int = unit.MOVE_RANGE
 	for target in TaxiCab.range(from, radius):
 		if target in _terrain.get_used_cells():
 			var path: PackedVector2Array = _astar.get_point_path(from, target)
@@ -94,7 +94,7 @@ func _move_unit_from_to(unit: Unit, origin: Vector2i, target_map_position: Vecto
 	assert(_unit_map[origin] == unit)
 	if not _unit_map.has(target_map_position):
 		var path: PackedVector2Array = _astar.get_point_path(origin, target_map_position)
-		if TaxiCab.distance(origin, target_map_position) <= unit.MOVERANGE and not path.is_empty():
+		if TaxiCab.distance(origin, target_map_position) <= unit.MOVE_RANGE and not path.is_empty():
 			_remove_unit_from(origin)
 			_place_unit_at(unit, target_map_position)
 			await unit.move_along(path)
