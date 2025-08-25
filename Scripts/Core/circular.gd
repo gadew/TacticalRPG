@@ -1,9 +1,13 @@
-class_name CircularBuffer
+class_name CircularIterator
 extends RefCounted
+## Circular Iterator.
+##
+## Provides a simple iterator that continually repeats all given elements.
 
 var _array: Array
 var _i: int
 
+## Builds a [CircularIterator] from [param array].
 func _init(array: Array) -> void:
 	assert(not array.is_empty())
 	self._array = array

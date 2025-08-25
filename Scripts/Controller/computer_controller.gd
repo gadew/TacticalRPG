@@ -13,5 +13,5 @@ func start_turn() -> void:
 		await _commander._terrain.move_unit_to(unit, reachable.pick_random())
 	_commander.end_turn.emit(_commander)
 
-func input_grid_position(_grid_position: Vector2i) -> void:
+func input_map_position(_map_position: Vector2i) -> void:
 	pass
